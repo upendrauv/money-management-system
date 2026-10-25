@@ -46,11 +46,16 @@ public class AuthService {
             throw new BadRequestException("Email is already registered!");
         }
 
+        String currency = (request.getCurrency() != null && !request.getCurrency().trim().isEmpty())
+                ? request.getCurrency().trim().toUpperCase()
+                : "USD";
+
         User user = new User(
                 request.getUsername().trim(),
                 request.getEmail().trim().toLowerCase(),
                 passwordEncoder.encode(request.getPassword()),
-                request.getFullName() != null ? request.getFullName().trim() : request.getUsername()
+                request.getFullName() != null ? request.getFullName().trim() : request.getUsername(),
+                currency
         );
 
         User savedUser = userRepository.save(user);
@@ -63,7 +68,8 @@ public class AuthService {
                 savedUser.getId(),
                 savedUser.getUsername(),
                 savedUser.getEmail(),
-                savedUser.getFullName()
+                savedUser.getFullName(),
+                savedUser.getCurrency()
         );
     }
 
@@ -76,19 +82,23 @@ public class AuthService {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserPrincipal userDetails = (UserPrincipal) authentication.getPrincipal();
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElse(null);
+        String userCurrency = (user != null && user.getCurrency() != null) ? user.getCurrency() : "USD";
+
         return new AuthResponse(
                 jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                userDetails.getFullName()
+                userDetails.getFullName(),
+                userCurrency
         );
     }
 
     @Transactional(readOnly = true)
     public UserDto getCurrentUser(UserPrincipal principal) {
         User user = getUserEntity(principal);
-        return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getCreatedAt());
+        return new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getFullName(), user.getCurrency(), user.getCreatedAt());
     }
 
     @Transactional(readOnly = true)

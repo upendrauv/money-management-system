@@ -8,6 +8,7 @@ public class AuthResponse {
     private String username;
     private String email;
     private String fullName;
+    private String currency = "USD";
 
     public AuthResponse() {
     }
@@ -18,6 +19,16 @@ public class AuthResponse {
         this.username = username;
         this.email = email;
         this.fullName = fullName;
+        this.currency = "USD";
+    }
+
+    public AuthResponse(String token, Long id, String username, String email, String fullName, String currency) {
+        this.token = token;
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.fullName = fullName;
+        this.currency = currency != null ? currency : "USD";
     }
 
     public String getToken() {
@@ -66,6 +77,14 @@ public class AuthResponse {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
 

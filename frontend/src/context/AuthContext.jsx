@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }) => {
         username: res.data.username,
         email: res.data.email,
         fullName: res.data.fullName,
+        currency: res.data.currency || 'USD',
       };
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
@@ -64,6 +65,7 @@ export const AuthProvider = ({ children }) => {
         username: res.data.username,
         email: res.data.email,
         fullName: res.data.fullName,
+        currency: res.data.currency || 'USD',
       };
       setUser(userObj);
       localStorage.setItem('user', JSON.stringify(userObj));

@@ -19,6 +19,7 @@ public class RegisterRequest {
     private String password;
 
     private String fullName;
+    private String currency = "USD";
 
     public RegisterRequest() {
     }
@@ -28,6 +29,15 @@ public class RegisterRequest {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
+        this.currency = "USD";
+    }
+
+    public RegisterRequest(String username, String email, String password, String fullName, String currency) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.currency = (currency != null && !currency.trim().isEmpty()) ? currency.trim().toUpperCase() : "USD";
     }
 
     public String getUsername() {
@@ -60,6 +70,14 @@ public class RegisterRequest {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = (currency != null && !currency.trim().isEmpty()) ? currency.trim().toUpperCase() : "USD";
     }
 }
 

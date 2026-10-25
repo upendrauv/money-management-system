@@ -23,6 +23,9 @@ public class User {
     @Column(name = "full_name", length = 100)
     private String fullName;
 
+    @Column(name = "currency", length = 10)
+    private String currency = "USD";
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -37,6 +40,15 @@ public class User {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
+        this.currency = "USD";
+    }
+
+    public User(String username, String email, String password, String fullName, String currency) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.currency = (currency != null && !currency.trim().isEmpty()) ? currency.trim().toUpperCase() : "USD";
     }
 
     @PrePersist
@@ -89,6 +101,14 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = (currency != null && !currency.trim().isEmpty()) ? currency.trim().toUpperCase() : "USD";
     }
 
     public LocalDateTime getCreatedAt() {

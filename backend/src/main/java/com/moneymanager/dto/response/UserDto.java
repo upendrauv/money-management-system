@@ -8,6 +8,7 @@ public class UserDto {
     private String username;
     private String email;
     private String fullName;
+    private String currency;
     private LocalDateTime createdAt;
 
     public UserDto() {
@@ -18,6 +19,16 @@ public class UserDto {
         this.username = username;
         this.email = email;
         this.fullName = fullName;
+        this.currency = "USD";
+        this.createdAt = createdAt;
+    }
+
+    public UserDto(Long id, String username, String email, String fullName, String currency, LocalDateTime createdAt) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.fullName = fullName;
+        this.currency = currency != null ? currency : "USD";
         this.createdAt = createdAt;
     }
 
@@ -51,6 +62,14 @@ public class UserDto {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public LocalDateTime getCreatedAt() {
